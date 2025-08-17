@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+#output {
+    max-height: 400px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
