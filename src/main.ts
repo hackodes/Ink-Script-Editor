@@ -1,92 +1,12 @@
 import { Compiler, Story } from "inkjs/full";
+import { setupInkLanguageAndTheme, createEditor } from './editor';
 
-
-import * as monaco from 'monaco-editor';
 import './index.css';
 
 
-monaco.languages.register({ id: 'ink' });
-monaco.languages.setMonarchTokensProvider('ink', {
-  tokenizer: {
-    root: [
-      // Comments
-      [/\/\/.*$/, 'comment'],
 
-      // Tags (e.g. #tag)
-      [/^\s*#\w+/, 'tag'],
-
-      // Diverts (-> label or -> label -> label)
-      [/->\s*\w+(\s*->\s*\w+)*/, 'keyword'],
-
-      // Choices (* or +)
-      [/^\s*[\*\+]/, 'keyword'],
-
-      // Knots (=== knot ===)
-      [/^={3,}\s*\w[\w\s]*\s*={3,}$/, 'type.identifier'],
-
-      // Stitches (== stitch ==)
-      [/^={2}\s*\w[\w\s]*\s*={2}$/, 'type'],
-
-      // Ink keywords
-      [/\b(VAR|CONST|LIST|INCLUDE|EXTERNAL|TEMP|RETURN)\b/, 'keyword'],
-
-      // Inline logic operator (~)
-      [/^\s*~\s*\w+/, 'variable'],
-
-      // Strings
-      [/".*?"/, 'string'],
-
-      // Numbers
-      [/\b\d+(\.\d+)?\b/, 'number'],
-
-      // Logic operators and expressions
-      [/\b(and|or|not)\b/, 'operator'],
-      [/[=<>!]=?|[\+\-\*\/]/, 'operator'],
-
-      // Function calls (e.g. RANDOM(), CHOICE_COUNT())
-      [/\b\w+\s*\(/, 'function'],
-
-      // Identifiers / variables
-      [/\b[a-zA-Z_][a-zA-Z0-9_]*\b/, 'identifier'],
-    ]
-  }
-});
-
-
-
-monaco.editor.defineTheme('inky-light', {
-  base: 'vs',
-  inherit: true,
-  rules: [
-    { token: 'comment', foreground: '888888', fontStyle: 'italic' },
-    { token: 'keyword', foreground: '005fa3' },
-    { token: 'tag', foreground: 'aa00aa' },
-    { token: 'string', foreground: 'a31515' },
-    { token: 'number', foreground: '098658' },
-    { token: 'function', foreground: '795e26' },
-    { token: 'type.identifier', foreground: '267f99', fontStyle: 'bold' }
-  ],
-  colors: {
-    'editor.background': '#ffffff',
-    'editorLineNumber.foreground': '#aaaaaa',
-    'editorGutter.background': '#f7f7f7',
-    'editorCursor.foreground': '#333333',
-    'editorIndentGuide.background': '#e0e0e0'
-  }
-});
-monaco.editor.setTheme('inky-light');
-
-
-const monacoEditor = monaco.editor.create(document.getElementById('editor')!, {
-  value: `// Write your Ink script here`,
-  language: 'ink', 
-  theme: 'inky-light',
-  automaticLayout: true,
-  minimap: { enabled: false },
-  lineNumbersMinChars: 3 // default is 5
-});
-
-
+setupInkLanguageAndTheme(); 
+const editor = createEditor(document.getElementById('editor')!);
 
 
 // Story instance
@@ -138,7 +58,7 @@ function renderStory(story: Story, outputEl: HTMLElement) {
 
 // Compile and play Ink story
 function compileAndPlay(): void {
-  const inkSource = monacoEditor.getValue();
+  const inkSource = editor.getValue();
 
   const outputEl = document.getElementById("output") as HTMLElement;
   outputEl.innerHTML = "";
@@ -165,11 +85,11 @@ let isProgrammaticChange = false;
 // Future updates to the editor content should not trigger compilation
 function updateEditorContent(newContent: string) {
   isProgrammaticChange = true;
-  monacoEditor.setValue(newContent);
+  editor.setValue(newContent);
   isProgrammaticChange = false;
 }
 
-monacoEditor.onDidChangeModelContent(() => {
+editor.onDidChangeModelContent(() => {
   if (!isProgrammaticChange) {
     compileAndPlay(); // Only run when user edits
   }
@@ -178,7 +98,7 @@ monacoEditor.onDidChangeModelContent(() => {
 
 // Copy editor content to clipboard
 document.getElementById("copyBtn")?.addEventListener("click", () => {
-  const text = monacoEditor.getValue();
+  const text = editor.getValue();
   navigator.clipboard.writeText(text).then(() => {
     const toast = document.getElementById("toast");
     if (toast) {
@@ -197,29 +117,10 @@ document.getElementById("copyBtn")?.addEventListener("click", () => {
 
 // Select all text in the editor
 document.getElementById("selectBtn")?.addEventListener("click", () => {
-  const model = monacoEditor.getModel();
+  const model = editor.getModel();
   if (model) {
     const fullRange = model.getFullModelRange();
-    monacoEditor.setSelection(fullRange);
-    monacoEditor.focus();
+    editor.setSelection(fullRange);
+    editor.focus();
   }
-});
-
-const editorTab = document.getElementById("editorTab");
-const outputTab = document.getElementById("outputTab");
-const editorPanel = document.getElementById("editorPanel");
-const outputPanel = document.getElementById("outputPanel");
-
-editorTab?.addEventListener("click", () => {
-  editorPanel?.classList.remove("hidden");
-  outputPanel?.classList.add("hidden");
-  editorTab.classList.add("active");
-  outputTab?.classList.remove("active");
-});
-
-outputTab?.addEventListener("click", () => {
-  outputPanel?.classList.remove("hidden");
-  editorPanel?.classList.add("hidden");
-  outputTab.classList.add("active");
-  editorTab?.classList.remove("active");
 });
