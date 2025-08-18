@@ -3,7 +3,5 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [tailwindcss()],
-  build: {
-    outDir: 'docs'
-  }
+  base: '/Ink-Script-Editor/', // 👈 Replace <REPO> with your actual repo name
 })

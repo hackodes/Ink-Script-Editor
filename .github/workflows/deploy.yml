@@ -1,36 +1,47 @@
-name: Build and Deploy
+name: Deploy static content to Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: ['main']
+
+  workflow_dispatch:
+
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
 
 jobs:
-  build:
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
-
+          node-version: lts/*
+          cache: 'npm'
       - name: Install dependencies
-        run: npm install
-
-      - name: Build site
+        run: npm ci
+      - name: Build
         run: npm run build
-
-      - name: Commit folder
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs
-          git commit -m "Update docs folder with latest build" || echo "No changes to commit"
-          git push
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
