@@ -1,4 +1,5 @@
 import { Compiler, Story } from "inkjs/full";
+
 import { setupInkLanguageAndTheme, createEditor } from './editor';
 
 import './index.css';
@@ -12,17 +13,30 @@ const editor = createEditor(document.getElementById('editor')!);
 // Story instance
 let story: Story | null = null;
 
+let hasStoryProgressed = false;
+
+
 // Render Ink story output
 function renderStory(story: Story, outputEl: HTMLElement) {
   // Continue story and append paragraphs
   while (story.canContinue) {
+    hasStoryProgressed = true;
     const paragraph = document.createElement("p");
     paragraph.textContent = story.Continue();
-    paragraph.className = "mb-2 p-1"; // spacing between lines
+    paragraph.className = "mb-2 p-1";
     outputEl.appendChild(paragraph);
+  
+    const tags = story.currentTags ?? [];
+    if (tags.length > 0) {
+      const tagBlock = document.createElement("div");
+      tagBlock.className = "mb-2 text-xs text-purple-700 font-mono";
+      tagBlock.textContent = `Tags: ${tags.join(", ")}`;
+      outputEl.appendChild(tagBlock);
+    }
   }
+  
 
-  // Remove old choices (optional: only remove buttons, not story text)
+  // Remove old choices
   const oldChoices = outputEl.querySelectorAll(".choice-button");
   oldChoices.forEach(el => el.remove());
 
@@ -35,14 +49,12 @@ function renderStory(story: Story, outputEl: HTMLElement) {
     btn.textContent = choice.text;
     btn.className = "choice-button bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded text-sm font-medium transition";
     btn.onclick = () => {
-      // Insert a divider before continuing the story
       const divider = document.createElement("div");
       divider.className = "my-3 border-t border-gray-300";
       outputEl.appendChild(divider);
-    
+
       story.ChooseChoiceIndex(index);
       renderStory(story, outputEl);
-      // Delete the choicesContainer after a choice is made
       choicesContainer.remove();
     };
     choicesContainer.appendChild(btn);
@@ -50,11 +62,16 @@ function renderStory(story: Story, outputEl: HTMLElement) {
 
   outputEl.appendChild(choicesContainer);
 
-  // Optional: scroll to bottom for new content
+  if (!story.canContinue && story.currentChoices.length === 0) {
+    const endBlock = document.createElement("div");
+    endBlock.className = "mt-6 p-4 bg-yellow-100 border border-yellow-300 rounded text-center text-sm font-semibold text-gray-700";
+    endBlock.textContent = "— End of Story —";
+    outputEl.appendChild(endBlock);
+  }
+
+  // Scroll to bottom for new content
   outputEl.scrollTo({ top: outputEl.scrollHeight, behavior: "smooth" });
-
 }
-
 
 // Compile and play Ink story
 function compileAndPlay(): void {
@@ -91,7 +108,11 @@ function updateEditorContent(newContent: string) {
 
 editor.onDidChangeModelContent(() => {
   if (!isProgrammaticChange) {
-    compileAndPlay(); // Only run when user edits
+    if (!hasStoryProgressed) {
+      compileAndPlay(); // Only recompile if story hasn't started
+    } else {
+      console.log("Edit ignored — story already in progress.");
+    }
   }
 });
 
