@@ -99,12 +99,6 @@ document.getElementById("restartBtn")?.addEventListener("click", () => {
 
 let isProgrammaticChange = false;
 
-// Future updates to the editor content should not trigger compilation
-function updateEditorContent(newContent: string) {
-  isProgrammaticChange = true;
-  editor.setValue(newContent);
-  isProgrammaticChange = false;
-}
 
 editor.onDidChangeModelContent(() => {
   if (!isProgrammaticChange) {
