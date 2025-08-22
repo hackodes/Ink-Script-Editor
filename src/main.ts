@@ -9,12 +9,10 @@ import './index.css';
 setupInkLanguageAndTheme(); 
 const editor = createEditor(document.getElementById('editor')!);
 
-
 // Story instance
 let story: Story | null = null;
 
 let hasStoryProgressed = false;
-
 
 // Render Ink story output
 function renderStory(story: Story, outputEl: HTMLElement) {
@@ -23,7 +21,7 @@ function renderStory(story: Story, outputEl: HTMLElement) {
     hasStoryProgressed = true;
     const paragraph = document.createElement("p");
     paragraph.textContent = story.Continue();
-    paragraph.className = "mb-2 p-1";
+    paragraph.className = "mb-2 p-1";   
     outputEl.appendChild(paragraph);
   
     const tags = story.currentTags ?? [];
@@ -76,20 +74,23 @@ function renderStory(story: Story, outputEl: HTMLElement) {
 // Compile and play Ink story
 function compileAndPlay(): void {
   const inkSource = editor.getValue();
-
   const outputEl = document.getElementById("output") as HTMLElement;
-  outputEl.innerHTML = "";
 
-  console.log("Compiler:", Compiler);
-  console.log("Compiling Ink source...");
+  outputEl.innerHTML = "";
+  outputEl.scrollTo({ top: 0 });
+
+  hasStoryProgressed = false;
 
   try {
     story = new Compiler(inkSource).Compile();
     renderStory(story, outputEl);
-  } catch (err: any) {
-    outputEl.innerHTML = `<p style="color:red;">Compilation error: ${err.message}</p>`;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      outputEl.innerHTML = `<p style="color:red;">Compilation error: ${err.message}</p>`;
+    }
   }
 }
+
 
 // Restart button handler
 document.getElementById("restartBtn")?.addEventListener("click", () => {
