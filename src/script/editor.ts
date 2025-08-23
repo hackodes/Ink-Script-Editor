@@ -1,5 +1,12 @@
 import * as monaco from 'monaco-editor';
 import defaultInk from '../../assets/example.ink?raw';
+import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
+
+self.MonacoEnvironment = {
+  getWorker() {
+    return new editorWorker()
+  }
+}
 
 export function setupInkLanguageAndTheme() {
   monaco.languages.register({ id: 'ink' });
