@@ -1,4 +1,4 @@
-import { setupInkLanguageAndTheme, createEditor } from './editor';
+import { setupInkLanguageAndTheme, createEditor } from './script/editor';
 import { compileAndPlay } from './script/compiler';
 import { setupEditorListeners } from './listeners/editorListeners';
 import { setupButtonListeners } from './listeners/buttonListeners';

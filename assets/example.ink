@@ -1,3 +1,5 @@
+// Write your Ink script here
+
 // === GLOBAL VARIABLES ===
 VAR player_name = "Explorer"
 VAR has_key = false

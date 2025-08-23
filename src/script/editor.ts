@@ -1,4 +1,5 @@
 import * as monaco from 'monaco-editor';
+import defaultInk from '../../assets/example.ink?raw';
 
 export function setupInkLanguageAndTheme() {
   monaco.languages.register({ id: 'ink' });
@@ -49,7 +50,7 @@ export function setupInkLanguageAndTheme() {
 export function createEditor(container: HTMLElement): monaco.editor.IStandaloneCodeEditor {
   monaco.editor.setTheme('inky-light');
   return monaco.editor.create(container, {
-    value: `// Write your Ink script here`,
+    value: defaultInk,
     language: 'ink',
     theme: 'inky-light',
     automaticLayout: true,
