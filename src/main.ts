@@ -4,13 +4,12 @@ import './index.css';
 
 setupInkLanguageAndTheme();
 const editor = createEditor(document.getElementById('editor')!);
-
 let story: Story | null = null;
 let hasStoryProgressed = false;
 let hasPendingChanges = false;
 let isProgrammaticChange = false;
+let lastCompiledSource = editor.getValue(); // ✅ Initialize with starting content
 
-// Render Ink story output
 function renderStory(story: Story, outputEl: HTMLElement) {
   while (story.canContinue) {
     hasStoryProgressed = true;
@@ -65,16 +64,15 @@ function renderStory(story: Story, outputEl: HTMLElement) {
   outputEl.scrollTo({ top: outputEl.scrollHeight, behavior: "smooth" });
 }
 
-// Compile and play Ink story
 function compileAndPlay(): void {
   const inkSource = editor.getValue();
-  const outputEl = document.getElementById("output") as HTMLElement;
+  lastCompiledSource = inkSource; // ✅ Save compiled version
 
+  const outputEl = document.getElementById("output") as HTMLElement;
   outputEl.innerHTML = "";
   outputEl.scrollTo({ top: 0 });
   hasStoryProgressed = false;
 
-  // Reset button label and style
   const restartBtn = document.getElementById("restartBtn");
   if (restartBtn) {
     restartBtn.textContent = "Restart Story";
@@ -91,38 +89,46 @@ function compileAndPlay(): void {
   }
 }
 
-// Restart/Reload button handler
 document.getElementById("restartBtn")?.addEventListener("click", () => {
   hasPendingChanges = false;
   compileAndPlay();
 });
 
-// Editor change detection
 editor.onDidChangeModelContent(() => {
   if (!isProgrammaticChange) {
-    hasPendingChanges = true;
-
+    const currentSource = editor.getValue();
     const restartBtn = document.getElementById("restartBtn");
-    if (restartBtn) {
-      restartBtn.textContent = "Reload Story";
-      restartBtn.classList.add("bg-orange-500", "hover:bg-orange-600");
-    }
-
     const toast = document.getElementById("toast");
-    if (toast) {
-      toast.textContent = "Story updated — click Reload to see changes.";
-      toast.classList.remove("opacity-0", "translate-y-4");
-      toast.classList.add("opacity-100", "translate-y-0");
 
-      setTimeout(() => {
-        toast.classList.remove("opacity-100", "translate-y-0");
-        toast.classList.add("opacity-0", "translate-y-4");
-      }, 2000);
+    if (currentSource !== lastCompiledSource) {
+      hasPendingChanges = true;
+
+      if (restartBtn) {
+        restartBtn.textContent = "Reload Story";
+        restartBtn.classList.add("bg-orange-500", "hover:bg-orange-600");
+      }
+
+      if (toast) {
+        toast.textContent = "Story updated — click Reload to see changes.";
+        toast.classList.remove("opacity-0", "translate-y-4");
+        toast.classList.add("opacity-100", "translate-y-0");
+
+        setTimeout(() => {
+          toast.classList.remove("opacity-100", "translate-y-0");
+          toast.classList.add("opacity-0", "translate-y-4");
+        }, 2000);
+      }
+    } else {
+      hasPendingChanges = false;
+
+      if (restartBtn) {
+        restartBtn.textContent = "Restart Story";
+        restartBtn.classList.remove("bg-orange-500", "hover:bg-orange-600");
+      }
     }
   }
 });
 
-// Copy editor content to clipboard
 document.getElementById("copyBtn")?.addEventListener("click", () => {
   const text = editor.getValue();
   navigator.clipboard.writeText(text).then(() => {
@@ -142,7 +148,6 @@ document.getElementById("copyBtn")?.addEventListener("click", () => {
   });
 });
 
-// Select all text in the editor
 document.getElementById("selectBtn")?.addEventListener("click", () => {
   const model = editor.getModel();
   if (model) {
