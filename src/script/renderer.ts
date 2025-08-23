@@ -1,10 +1,7 @@
 import { Story } from "inkjs/full";
 
-let hasStoryProgressed = false;
-
 export function renderStory(story: Story, outputEl: HTMLElement) {
     while (story.canContinue) {
-      hasStoryProgressed = true;
   
       const paragraph = document.createElement("p");
       paragraph.textContent = story.Continue();
