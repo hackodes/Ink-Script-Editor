@@ -1,10 +1,12 @@
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { compileAndPlay } from '../script/compiler';
 import { showToast } from '../utils/toast';
+import { resetToastFlag } from './editorListeners';
 
 export function setupButtonListeners(editor: monaco.editor.IStandaloneCodeEditor) {
   document.getElementById("restartBtn")?.addEventListener("click", () => {
     compileAndPlay(editor);
+    resetToastFlag(); 
   });
 
   document.getElementById("copyBtn")?.addEventListener("click", () => {
