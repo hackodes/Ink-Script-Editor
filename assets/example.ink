@@ -3,6 +3,7 @@
 // === GLOBAL VARIABLES ===
 VAR player_name = "Explorer"
 VAR has_key = false
+VAR door_unlocked = false
 VAR score = 0
 
 Hello, {player_name}! Let's explore this Ink script.
@@ -17,8 +18,8 @@ Choose a feature to explore:
     -> choices_and_conditionals
 + Variables and Diverts
     -> variables_and_diverts
-+ End Demo
-    -> end_demo
++ End Script
+    -> end_script
 
 === knots_and_stitches ===
 # Knots & Stitches
@@ -39,13 +40,20 @@ This is the second stitch.
 You find a mysterious door.
 
 + Try to open it
-    {has_key:
-        The door creaks open. Success!
+    {door_unlocked:
+        The door is already open.
         -> main_menu
     - else:
-        It's locked. You need a key.
-        -> main_menu
+        {has_key:
+            The door creaks open. Success!
+            ~ door_unlocked = true
+            -> main_menu
+        - else:
+            It's locked. You need a key.
+            -> main_menu
+        }
     }
+
 
 + Search for a key
     You found a key!
@@ -68,7 +76,7 @@ Your current score is: {score}
 Your new score is: {score}
 -> main_menu
 
-=== end_demo ===
-# End Demo
-This is the end of the demo
+=== end_script ===
+# End Script
+This is the end of the script
 -> END

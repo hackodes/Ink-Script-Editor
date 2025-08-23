@@ -12,9 +12,7 @@ export function renderStory(story: Story, outputEl: HTMLElement) {
       if (tags.length > 0) {
         const tagBlock = document.createElement("div");
         tagBlock.className = "mb-2 flex flex-wrap gap-2 text-xs font-mono text-purple-600";
-        tagBlock.innerHTML = tags.map(tag =>
-          `<span class="bg-purple-100 px-2 py-1 rounded border border-purple-300">${tag}</span>`
-        ).join("");
+        tagBlock.innerHTML = `<span class="bg-purple-100 px-2 py-1 rounded border border-purple-300"># ${tags.join(' ')}</span>`;
         outputEl.appendChild(tagBlock);
       }
     }
