@@ -15,6 +15,35 @@ export function setupButtonListeners(editor: monaco.editor.IStandaloneCodeEditor
     });
   });
 
+  document.getElementById("saveBtn")?.addEventListener("click", async () => {
+    const content = editor.getValue();
+  
+    try {
+      const fileHandle = await (window as any).showSaveFilePicker({
+        suggestedName: "script.ink",
+        types: [
+          {
+            description: "Ink Script",
+            accept: { "text/plain": [".ink"] },
+          },
+        ],
+      });
+  
+      const writable = await fileHandle.createWritable();
+      await writable.write(content);
+      await writable.close();
+  
+      showToast(`Saved to ${fileHandle.name}`);
+    } catch (err: any) {
+      if (err.name !== "AbortError") {
+        console.error("Save failed:", err);
+        showToast("Failed to save file.");
+      }
+    }    
+  });
+  
+  
+
   document.getElementById("selectBtn")?.addEventListener("click", () => {
     const model = editor.getModel();
     if (model) {

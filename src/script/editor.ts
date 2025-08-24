@@ -59,6 +59,7 @@ export function setupInkLanguageAndTheme() {
 
 export function createEditor(container: HTMLElement): monaco.editor.IStandaloneCodeEditor {
   monaco.editor.setTheme('inky-light');
+  
   return monaco.editor.create(container, {
     value: defaultInk,
     language: 'ink',

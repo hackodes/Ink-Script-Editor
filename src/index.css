@@ -54,6 +54,10 @@
   .select-button {
     @apply text-sm md:text-base bg-stone-600 text-white px-4 py-2 rounded hover:bg-stone-700 transition;
   }
+
+  .save-button {
+    @apply text-sm md:text-base bg-stone-600 text-white px-4 py-2 rounded hover:bg-stone-700 transition;
+  }
   
   .copy-button {
     @apply text-sm md:text-base bg-stone-500 text-white px-4 py-2 rounded hover:bg-stone-600 transition;
