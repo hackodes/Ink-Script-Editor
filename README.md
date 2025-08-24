@@ -14,10 +14,10 @@ Explore the editor [here](https://ink-script-editor.vercel.app/).
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/ink-previewer.git
+   git clone https://github.com/hackodes/ink-script-editor.git
 
-    cd ink-previewer
-    ```
+   cd ink-script-editor
+   ```
 
 2. Install dependencies:
     ```bash
