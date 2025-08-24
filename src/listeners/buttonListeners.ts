@@ -42,8 +42,6 @@ export function setupButtonListeners(editor: monaco.editor.IStandaloneCodeEditor
     }    
   });
   
-  
-
   document.getElementById("selectBtn")?.addEventListener("click", () => {
     const model = editor.getModel();
     if (model) {
