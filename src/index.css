@@ -1,10 +1,65 @@
 @import "tailwindcss";
 
 #output {
+    padding: 1.5rem;
     max-height: 400px;
     overflow-y: auto;
     scroll-behavior: smooth;
   }
 
-
+  .background {
+    @apply bg-stone-100 text-stone-800 font-serif p-8 leading-relaxed;
+  }
+  
+  .title {
+    @apply text-4xl font-bold text-stone-700 tracking-tight mb-4;
+  }
+  
+  .paragraph {
+    @apply mb-4 text-base text-stone-700 leading-loose;
+  }
+  
+  .tag-block {
+    @apply mb-4 flex flex-wrap gap-2 text-sm text-stone-500;
+  }
+  
+  .tag-block-span {
+    @apply bg-stone-200 px-2 py-1 rounded border border-stone-300 text-stone-600;
+  }
+  
+  .choice-button {
+    @apply bg-stone-300 hover:bg-stone-400 text-stone-800 px-4 py-2 rounded text-sm font-medium transition;
+  }
+  
+  .end-block {
+    @apply mt-4 p-6 bg-stone-200 border border-stone-300 rounded-lg text-center text-base font-medium text-stone-700 shadow-sm;
+  }
+  
+  .divider {
+    @apply my-6 border-t border-stone-300;
+  }
+  
+  .choices-container {
+    @apply flex flex-wrap gap-3 mt-6;
+  }
+  
+  .compiler-error {
+    @apply text-red-500 font-mono text-sm;
+  }
+  
+  .restart-button {
+    @apply bg-stone-700 text-white px-4 py-2 rounded hover:bg-stone-800 transition;
+  }
+  
+  .select-button {
+    @apply bg-stone-600 text-white px-4 py-2 rounded hover:bg-stone-700 transition;
+  }
+  
+  .copy-button {
+    @apply bg-stone-500 text-white px-4 py-2 rounded hover:bg-stone-600 transition;
+  }
+  
+  .toast {
+    @apply fixed bottom-6 right-6 bg-stone-700 text-white px-4 py-2 rounded shadow-lg opacity-0 transform translate-y-4 transition-all duration-300 pointer-events-none z-50;
+  }
   

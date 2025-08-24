@@ -8,11 +8,11 @@
   <link href="/src/index.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100 text-gray-800 font-sans p-6">
+<body class="background">
   <div class="max-w-[95%] mx-auto space-y-6">
 
     <!-- Title -->
-    <h1 class="text-3xl font-bold text-indigo-600">Ink Script Editor</h1>
+    <h1 class="title">Ink Script Editor</h1>
 
     <!-- Mobile Tab Toggle -->
     <div class="flex justify-center gap-4 mb-4 md:hidden">
@@ -34,12 +34,11 @@
           class="fixed bottom-0 left-0 right-0 bg-white shadow p-2 z-10 md:static md:bg-transparent md:shadow-none md:p-0">
 
           <div class="flex gap-2 justify-items-start p-2">
-            <button id="copyBtn" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Copy
+            <button id="copyBtn" class="copy-button">Copy
               Script</button>
-            <button id="selectBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Select
+            <button id="selectBtn" class="select-button">Select
               All</button>
-            <button id="restartBtn"
-              class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">Restart Story</button>
+            <button id="restartBtn" class="restart-button">Restart Story</button>
           </div>
         </div>
       </div>
@@ -52,8 +51,7 @@
   </div>
 
   <!-- Toast Notification -->
-  <div id="toast"
-    class="fixed bottom-6 right-6 bg-green-600 text-white px-4 py-2 rounded shadow-lg opacity-0 transform translate-y-4 transition-all duration-300 pointer-events-none z-50">
+  <div id="toast" class="">
   </div>
 
   <!-- Script -->

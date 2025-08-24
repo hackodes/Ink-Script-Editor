@@ -36,20 +36,23 @@ export function setupInkLanguageAndTheme() {
     base: 'vs',
     inherit: true,
     rules: [
-      { token: 'comment', foreground: '888888', fontStyle: 'italic' },
-      { token: 'keyword', foreground: '005fa3' },
-      { token: 'tag', foreground: 'aa00aa' },
-      { token: 'string', foreground: 'a31515' },
-      { token: 'number', foreground: '098658' },
-      { token: 'function', foreground: '795e26' },
-      { token: 'typeIdentifier', foreground: '267f99', fontStyle: 'bold' }
-    ],
+      { token: 'comment', foreground: '7f8c8d', fontStyle: 'italic' },   
+      { token: 'keyword', foreground: '1f4b99' },                          
+      { token: 'tag', foreground: 'b40082' },                             
+      { token: 'string', foreground: 'd35400' },                          
+      { token: 'number', foreground: '27ae60' },                          
+      { token: 'function', foreground: '8e44ad' },                        
+      { token: 'typeIdentifier', foreground: '2980b9', fontStyle: 'bold' } 
+    ]
+    ,
     colors: {
-      'editor.background': '#ffffff',
+      'editor.background': '#fdfdfd',
       'editorLineNumber.foreground': '#aaaaaa',
       'editorGutter.background': '#f7f7f7',
       'editorCursor.foreground': '#333333',
-      'editorIndentGuide.background': '#e0e0e0'
+      'editorIndentGuide.background': '#e0e0e0',
+      'editor.lineHighlightBackground': '#f5f5f5',
+      'editor.selectionBackground': '#cce2ff'
     }
   });
 }

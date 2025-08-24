@@ -24,7 +24,7 @@ export function compileAndPlay(editor: monaco.editor.IStandaloneCodeEditor): voi
     renderStory(story, outputEl);
   } catch (err: unknown) {
     if (err instanceof Error) {
-      outputEl.innerHTML = `<p class="text-red-600 font-mono text-sm">Compilation error: ${err.message}</p>`;
+      outputEl.innerHTML = `<p class="compiler-error">Compilation error: ${err.message}</p>`;
     }
   }
 }
