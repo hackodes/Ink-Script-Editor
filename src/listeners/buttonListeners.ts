@@ -23,4 +23,26 @@ export function setupButtonListeners(editor: monaco.editor.IStandaloneCodeEditor
       editor.focus();
     }
   });
+
+  const editorTab = document.getElementById("editorTab");
+  const outputTab = document.getElementById("outputTab");
+  const editorPanel = document.getElementById("editorPanel");
+  const outputPanel = document.getElementById("outputPanel");
+  
+  if (editorTab && outputTab && editorPanel && outputPanel) {
+    editorTab.addEventListener("click", () => {
+      editorPanel.classList.remove("hidden");
+      outputPanel.classList.add("hidden");
+      editorTab.classList.add("active");
+      outputTab.classList.remove("active");
+    });
+  
+    outputTab.addEventListener("click", () => {
+      outputPanel.classList.remove("hidden");
+      editorPanel.classList.add("hidden");
+      outputTab.classList.add("active");
+      editorTab.classList.remove("active");
+    });
+  }
+  
 }

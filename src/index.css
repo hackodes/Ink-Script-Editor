@@ -12,7 +12,7 @@
   }
   
   .title {
-    @apply text-4xl font-bold text-stone-700 tracking-tight mb-4;
+    @apply text-3xl font-bold text-stone-700 tracking-tight mb-4 md:text-4xl;
   }
   
   .paragraph {
@@ -48,18 +48,26 @@
   }
   
   .restart-button {
-    @apply bg-stone-700 text-white px-4 py-2 rounded hover:bg-stone-800 transition;
+    @apply text-sm md:text-base bg-stone-700 text-white px-4 py-2 rounded hover:bg-stone-800 transition;
   }
   
   .select-button {
-    @apply bg-stone-600 text-white px-4 py-2 rounded hover:bg-stone-700 transition;
+    @apply text-sm md:text-base bg-stone-600 text-white px-4 py-2 rounded hover:bg-stone-700 transition;
   }
   
   .copy-button {
-    @apply bg-stone-500 text-white px-4 py-2 rounded hover:bg-stone-600 transition;
+    @apply text-sm md:text-base bg-stone-500 text-white px-4 py-2 rounded hover:bg-stone-600 transition;
   }
   
   .toast {
     @apply fixed bottom-6 right-6 bg-stone-700 text-white px-4 py-2 rounded shadow-lg opacity-0 transform translate-y-4 transition-all duration-300 pointer-events-none z-50;
+  }
+  
+  .tab-button {
+    @apply px-4 py-2 bg-stone-500 hover:bg-stone-600 text-white rounded text-sm font-medium font-serif transition;
+  }
+  
+  .tab-button:active {
+    @apply bg-stone-700;
   }
   
