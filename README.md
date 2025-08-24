@@ -8,7 +8,7 @@ Ink Script Editor is a web-based editor used to write and test Ink scripts.
 - Easy integration with existing Ink projects
 - Made with Vite.js for fast performance
 
-Explore the editor [here](ink-script-editor.vercel.app).
+Explore the editor [here](https://ink-script-editor.vercel.app/).
 
 ## Installation
 
