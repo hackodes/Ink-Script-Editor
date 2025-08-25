@@ -71,5 +71,29 @@ export function setupButtonListeners(editor: monaco.editor.IStandaloneCodeEditor
       editorTab.classList.remove("active");
     });
   }
+
+  const loadBtn = document.getElementById("loadBtn");
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = ".ink";
+  fileInput.style.display = "none";
+  document.body.appendChild(fileInput);
+
+  loadBtn?.addEventListener("click", () => {
+    fileInput.click();
+  });
+
+  fileInput.addEventListener("change", () => {
+    const file = fileInput.files?.[0];
+    if (!file) return;
   
+    const reader = new FileReader();
+    reader.onload = () => {
+      const content = reader.result as string;
+      editor.setValue(content);
+      showToast(`Loaded - ${file.name}`);
+      fileInput.value = ""; 
+    };
+    reader.readAsText(file);
+  });
 }

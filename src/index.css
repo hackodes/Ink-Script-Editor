@@ -48,7 +48,7 @@
   }
   
   .restart-button {
-    @apply text-sm md:text-base bg-stone-700 text-white px-4 py-2 rounded hover:bg-stone-800 transition;
+    @apply text-sm md:text-sm bg-stone-700 text-white px-4 py-2 rounded hover:bg-stone-800 transition;
   }
   
   .select-button {
@@ -60,6 +60,14 @@
   }
   
   .copy-button {
+    @apply text-sm md:text-base bg-stone-500 text-white px-4 py-2 rounded hover:bg-stone-600 transition;
+  }
+
+  .copy-button {
+    @apply text-sm md:text-base bg-stone-500 text-white px-4 py-2 rounded hover:bg-stone-600 transition;
+  }
+  
+  .load-button {
     @apply text-sm md:text-base bg-stone-500 text-white px-4 py-2 rounded hover:bg-stone-600 transition;
   }
   
