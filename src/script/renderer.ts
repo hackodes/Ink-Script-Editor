@@ -5,13 +5,13 @@ export function renderStory(story: Story, outputEl: HTMLElement) {
   
       const paragraph = document.createElement("p");
       paragraph.textContent = story.Continue();
-      paragraph.className = "paragraph";
-      outputEl.appendChild(paragraph);
+      paragraph.className = "paragraph animate-fadeInUp";
+      outputEl.appendChild(paragraph);      
   
       const tags = story.currentTags ?? [];
       if (tags.length > 0) {
         const tagBlock = document.createElement("div");
-        tagBlock.className = "tag-block";
+        tagBlock.className = "tag-block animate-fadeInUp";
         tagBlock.innerHTML = `<span class="tag-block-span"># ${tags.join(' ')}</span>`;
         outputEl.appendChild(tagBlock);
       }
@@ -21,7 +21,7 @@ export function renderStory(story: Story, outputEl: HTMLElement) {
     oldChoices.forEach(el => el.remove());
   
     const choicesContainer = document.createElement("div");
-    choicesContainer.className = "choices-container";
+    choicesContainer.className = "choices-container animate-fadeInUp";
   
     story.currentChoices.forEach((choice, index) => {
       const btn = document.createElement("button");
@@ -29,7 +29,7 @@ export function renderStory(story: Story, outputEl: HTMLElement) {
       btn.className = "choice-button";
       btn.onclick = () => {
         const divider = document.createElement("div");
-        divider.className = "divider";
+        divider.className = "divider animate-fadeInUp";
         outputEl.appendChild(divider);
   
         story.ChooseChoiceIndex(index);
@@ -43,7 +43,7 @@ export function renderStory(story: Story, outputEl: HTMLElement) {
   
     if (!story.canContinue && story.currentChoices.length === 0) {
       const endBlock = document.createElement("div");
-      endBlock.className = "end-block";
+      endBlock.className = "end-block animate-fadeInUp";
       endBlock.textContent = "— End of Story —";
       outputEl.appendChild(endBlock);
     }

@@ -7,6 +7,25 @@
     scroll-behavior: smooth;
   }
 
+  #output::-webkit-scrollbar {
+    border-left: 1px solid rgba(200, 200, 200, 0.5);
+    width: 14px;
+    height: 8px;
+  }
+  
+  #output::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  #output:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 100, 100, 0.3); /* subtle gray */
+    transition: background-color 0.2s ease;
+  }
+  
+  #output::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(100, 100, 100, 0.5); /* darker on hover */
+  }
+
   .background {
     @apply bg-stone-100 text-stone-800 font-serif p-8 leading-relaxed;
   }
@@ -82,4 +101,20 @@
   .tab-button:active {
     @apply bg-stone-700;
   }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fadeInUp {
+    animation: fadeInUp 0.4s ease-out forwards;
+  }
+  
   
